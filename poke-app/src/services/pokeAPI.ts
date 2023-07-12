@@ -40,8 +40,6 @@ export const pokeAPI = {
       const filteredResults = pokemonList.filter((pokemon: any) =>
         pokemon.name.includes(searchTerm)
       );
-
-      // Call the callback function with search results
       callback(filteredResults);
     },
     300
