@@ -1,17 +1,25 @@
 import { debounce } from "lodash";
 
 export const pokeAPI = {
-  getPokemonList: async (setPokemonList: Function): Promise<any[]> => {
+  getPokemonList: async (offset: number, setPokemonList: Function): Promise<any[]> => {
     try {
-      const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=25"
-      );
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=25&offset=${offset}`);
       const data = await response.json();
-      setPokemonList(data.results);
+      
       return data.results;
     } catch (error) {
-      console.error("Error fetching data from pokemonList:", error);
+      console.error("Error fetching Pokemon list:", error);
       return [];
+    }
+  },
+  getTotalPokemonCount: async (): Promise<number> => {
+    try {
+      const response = await fetch("https://pokeapi.co/api/v2/pokemon");
+      const data = await response.json();
+      return data.count;
+    } catch (error) {
+      console.error("Error fetching total count of Pokémon:", error);
+      throw error;
     }
   },
 
