@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { pokeAPI } from "../services/pokeAPI";
 import {
@@ -6,24 +6,15 @@ import {
   CircularProgress,
   Chip,
   Box,
-  Card,
   Container,
   Grid,
   Button,
 } from "@mui/material";
-import {
-  InfoContainer,
-  ImageContainer,
-  InfoPage,
-  Title,
-  StatContainer,
-  StatLabel,
-  StatValue,
-} from "../styles/theme";
+import { PokemonDetail } from "../types";
 
 const Pokemon: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
-  const [pokemonDetail, setPokemonDetail] = useState<any | null>(null);
+  const [pokemonDetail, setPokemonDetail] = useState<PokemonDetail | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
