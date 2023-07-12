@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { pokeAPI } from "../services/pokeAPI";
 import {
   Typography,
@@ -9,6 +9,7 @@ import {
   Card,
   Container,
   Grid,
+  Button,
 } from "@mui/material";
 import {
   InfoContainer,
@@ -23,6 +24,7 @@ import {
 const Pokemon: React.FC = () => {
   const { id } = useParams<{ id?: string }>();
   const [pokemonDetail, setPokemonDetail] = useState<any | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPokemonDetail = async () => {
@@ -39,6 +41,14 @@ const Pokemon: React.FC = () => {
     fetchPokemonDetail();
   }, [id]);
 
+  const handleGoBack = () => {
+    navigate("/");
+  };
+
+  const handleAddToTeam = () => {
+    console.log("Agregar al equipo:", pokemonDetail);
+  };
+
   if (!pokemonDetail) {
     return (
       <Box
@@ -46,7 +56,7 @@ const Pokemon: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minHeight: "300px", 
+          minHeight: "300px",
         }}
       >
         <CircularProgress size={120} />{" "}
@@ -132,6 +142,19 @@ const Pokemon: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
+
+      <Box sx={{ margin: "2rem", textAlign: "center" }}>
+        <Button
+          sx={{ margin: "2rem" }}
+          variant="contained"
+          onClick={handleGoBack}
+        >
+          Go back to Home
+        </Button>
+        <Button variant="contained" onClick={handleAddToTeam}>
+          Add to Team
+        </Button>
+      </Box>
     </Container>
   );
 };
