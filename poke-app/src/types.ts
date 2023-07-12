@@ -1,4 +1,8 @@
-export interface PokemonProps {
+export interface PokemonIndividualProps {
+  name: string;
+  url: string;
+}
+export interface PokemonProps  {
   pokemon: {
     name: string;
     url: string;
@@ -26,4 +30,7 @@ export interface PokemonDetail {
       name: string;
     };
   }[];
+  name:string;
+  height:number;
+  weight:number;
 }
