@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { CardContent, Typography, CardMedia, Chip, Box } from "@mui/material";
-import { CardContainer, ContentContainer, Title } from "../styles/theme";
-import Icon from "@mui/material/Icon";
+import { CardContainer, ContentContainer } from "../styles/theme";
+import { PokemonDetail, PokemonIndividualProps } from "../types";
 
-import { PokemonDetail, PokemonProps } from "../types";
-
-const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
-  const [pokemonData, setPokemonData] = useState<PokemonDetail>();
+const PokemonCard: React.FC<{pokemon: PokemonIndividualProps}> = ( {pokemon} ) => {
+  const { url, name } = pokemon;
+  const [pokemonData, setPokemonData] = useState<PokemonDetail | null>(null);
   useEffect(() => {
     const fetchPokemonData = async () => {
       try {
-        const response = await fetch(pokemon.url);
+        const response = await fetch(url);
         const data: PokemonDetail = await response.json();
         setPokemonData(data);
       } catch (error) {
@@ -19,7 +18,7 @@ const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
     };
 
     fetchPokemonData();
-  }, [pokemon.url]);
+  }, [url]);
 
   const frontSprite = pokemonData?.sprites.other.dream_world.front_default;
 
@@ -28,7 +27,7 @@ const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
       <CardMedia
         component="img"
         src={frontSprite}
-        alt={pokemon.name}
+        alt={name}
         style={{
           width: "150px",
           height: "150px",
@@ -38,9 +37,11 @@ const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
       />
       <CardContent>
         <ContentContainer>
-        <Typography variant="caption" display="block" gutterBottom>#{pokemonData?.id}</Typography>
+          <Typography variant="caption" display="block" gutterBottom>
+            #{pokemonData?.id}
+          </Typography>
           <Typography variant="h5" display="block" gutterBottom>
-            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+            {name.charAt(0).toUpperCase() + name.slice(1)}
           </Typography>
           <Box>
             {pokemonData?.types.map((type) => (
