@@ -1,80 +1,54 @@
-import { Box, Grid, TextField, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Typography, Box, Grid, Button, TextField } from "@mui/material";
+import { grey } from "@mui/material/colors";
 import PokemonCard from "../components/PokemonCard";
-import { Link, useSearchParams } from "react-router-dom";
-import { pokeAPI } from "../services/pokeAPI";
-import { blue, grey } from "@mui/material/colors";
+import {
+  fetchPokemonList,
+  fetchTotalCount,
+  handleSearchChange as handleSearchChangeUtil,
+  handlePreviousPage as handlePreviousPageUtil,
+  handleNextPage as handleNextPageUtil,
+  handleAddToTeam as handleAddToTeamUtil,
+  handleRemoveFromTeam as handleRemoveFromTeamUtil,
+} from "../utils/utils";
+import { PokemonIndividualProps } from "../types";
 
-const Home = () => {
-  const [pokemonList, setPokemonList] = useState<any[]>([]);
-  const [originalPokemonList, setOriginalPokemonList] = useState<any[]>([]);
+const Home: React.FC = () => {
+  const [pokemonList, setPokemonList] = useState<PokemonIndividualProps[]>([]);
+  const [originalPokemonList, setOriginalPokemonList] = useState<
+    PokemonIndividualProps[]
+  >([]);
   const [offset, setOffset] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
-  const [teamPokemon, setTeamPokemon] = useState<any[]>([]);
+  const [teamPokemon, setTeamPokemon] = useState<PokemonIndividualProps[]>([]);
 
   useEffect(() => {
-    fetchPokemonList();
+    fetchPokemonList(offset, setPokemonList, setOriginalPokemonList);
   }, [offset]);
 
   useEffect(() => {
-    fetchTotalCount();
+    fetchTotalCount(setTotalCount);
   }, []);
 
-  const fetchPokemonList = async () => {
-    try {
-      const data = await pokeAPI.getPokemonList(offset, setPokemonList);
-      setOriginalPokemonList(data);
-      setPokemonList(data);
-    } catch (error) {
-      console.error("Error fetching Pokemon list:", error);
-      setPokemonList([]);
-      setOriginalPokemonList([]);
-    }
-  };
-
-  const fetchTotalCount = async () => {
-    try {
-      const count = await pokeAPI.getTotalPokemonCount();
-      setTotalCount(count);
-    } catch (error) {
-      console.error("Error fetching total count of Pokémon:", error);
-      setTotalCount(0);
-    }
-  };
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value.trim();
-
-    if (searchTerm === "") {
-      setPokemonList(originalPokemonList);
-    } else {
-      pokeAPI.debouncedSearch(searchTerm, originalPokemonList, setPokemonList);
-    }
+    handleSearchChangeUtil(e, originalPokemonList, setPokemonList);
   };
 
   const handlePreviousPage = () => {
-    if (offset >= 25) {
-      setOffset(offset - 25);
-    }
+    handlePreviousPageUtil(offset, setOffset);
   };
 
   const handleNextPage = () => {
-    if (offset + 25 < totalCount) {
-      setOffset(offset + 25);
-    }
+    handleNextPageUtil(offset, totalCount, setOffset);
   };
 
-  const handleAddToTeam = (pokemon: any) => {
-    if (
-      teamPokemon.length < 6 &&
-      !teamPokemon.find((p) => p.name === pokemon.name)
-    ) {
-      setTeamPokemon([...teamPokemon, pokemon]);
-    }
+  const handleAddToTeam = (pokemon: PokemonIndividualProps) => {
+    handleAddToTeamUtil(pokemon, teamPokemon, setTeamPokemon);
   };
 
-  const handleRemoveFromTeam = (pokemon: any) => {
-    setTeamPokemon(teamPokemon.filter((p) => p.id !== pokemon.id));
+  const handleRemoveFromTeam = (pokemon: PokemonIndividualProps) => {
+    handleRemoveFromTeamUtil(pokemon, teamPokemon, setTeamPokemon);
   };
 
   return (
@@ -96,7 +70,7 @@ const Home = () => {
         onChange={handleSearchChange}
         sx={{ marginBottom: "1rem" }}
       />
-      <Grid container spacing={2}>
+      <Grid container spacing={5}>
         {pokemonList.map((pokemon) => {
           const id = pokemon.url.split("/")[6];
           return (
