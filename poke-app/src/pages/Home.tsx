@@ -7,6 +7,7 @@ import { blue, grey } from "@mui/material/colors";
 
 const Home = () => {
   const [pokemonList, setPokemonList] = useState<any[]>([]);
+  const [originalPokemonList, setOriginalPokemonList] = useState<any[]>([]);
   const [offset, setOffset] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
 
@@ -21,10 +22,12 @@ const Home = () => {
   const fetchPokemonList = async () => {
     try {
       const data = await pokeAPI.getPokemonList(offset, setPokemonList);
+      setOriginalPokemonList(data);
       setPokemonList(data);
     } catch (error) {
       console.error("Error fetching Pokemon list:", error);
       setPokemonList([]);
+      setOriginalPokemonList([]);
     }
   };
 
@@ -40,7 +43,12 @@ const Home = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value.trim();
-    pokeAPI.debouncedSearch(searchTerm, pokemonList, setPokemonList);
+
+    if (searchTerm === "") {
+      setPokemonList(originalPokemonList);
+    } else {
+      pokeAPI.debouncedSearch(searchTerm, originalPokemonList, setPokemonList);
+    }
   };
 
   const handlePreviousPage = () => {
