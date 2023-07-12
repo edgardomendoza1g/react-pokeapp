@@ -65,7 +65,10 @@ const Home = () => {
   };
 
   const handleAddToTeam = (pokemon: any) => {
-    if (teamPokemon.length < 6 && !teamPokemon.find((p) => p.id === pokemon.id)) {
+    if (
+      teamPokemon.length < 6 &&
+      !teamPokemon.find((p) => p.name === pokemon.name)
+    ) {
       setTeamPokemon([...teamPokemon, pokemon]);
     }
   };
