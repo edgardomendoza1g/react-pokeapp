@@ -10,6 +10,7 @@ const Home = () => {
   const [originalPokemonList, setOriginalPokemonList] = useState<any[]>([]);
   const [offset, setOffset] = useState<number>(0);
   const [totalCount, setTotalCount] = useState<number>(0);
+  const [teamPokemon, setTeamPokemon] = useState<any[]>([]);
 
   useEffect(() => {
     fetchPokemonList();
@@ -63,6 +64,16 @@ const Home = () => {
     }
   };
 
+  const handleAddToTeam = (pokemon: any) => {
+    if (teamPokemon.length < 6 && !teamPokemon.find((p) => p.id === pokemon.id)) {
+      setTeamPokemon([...teamPokemon, pokemon]);
+    }
+  };
+
+  const handleRemoveFromTeam = (pokemon: any) => {
+    setTeamPokemon(teamPokemon.filter((p) => p.id !== pokemon.id));
+  };
+
   return (
     <Box
       sx={{
@@ -85,6 +96,9 @@ const Home = () => {
               <Link to={`/pokemon/${id}`} style={{ textDecoration: "none" }}>
                 <PokemonCard pokemon={pokemon} />
               </Link>
+              <button onClick={() => handleAddToTeam(pokemon)}>
+                Add to Team
+              </button>
             </Grid>
           );
         })}
@@ -97,6 +111,18 @@ const Home = () => {
           Next
         </button>
       </Box>
+
+      <Typography variant="h4" gutterBottom>
+        Team Pokemon
+      </Typography>
+      {teamPokemon.map((pokemon) => (
+        <div key={pokemon.id}>
+          <span>{pokemon.name}</span>
+          <button onClick={() => handleRemoveFromTeam(pokemon)}>
+            Remove from Team
+          </button>
+        </div>
+      ))}
     </Box>
   );
 };
