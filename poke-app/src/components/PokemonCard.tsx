@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { CardContent, Typography, CardMedia } from "@mui/material";
+import { CardContent, Typography, CardMedia, Chip, Box } from "@mui/material";
 import { CardContainer, ContentContainer, Title } from "../styles/theme";
+import Icon from "@mui/material/Icon";
+
 import { PokemonDetail, PokemonProps } from "../types";
 
 const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
@@ -26,6 +28,7 @@ const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
       <CardMedia
         component="img"
         src={frontSprite}
+        alt={pokemon.name}
         style={{
           width: "150px",
           height: "150px",
@@ -35,17 +38,15 @@ const PokemonCard: React.FC<PokemonProps> = ({ pokemon }) => {
       />
       <CardContent>
         <ContentContainer>
-          <Typography variant="subtitle1"># 1</Typography>
-          <Typography component="div" variant="h5">
-            {pokemon.name}
+        <Typography variant="caption" display="block" gutterBottom>#{pokemonData?.id}</Typography>
+          <Typography variant="h5" display="block" gutterBottom>
+            {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            Name
-          </Typography>
+          <Box>
+            {pokemonData?.types.map((type) => (
+              <Chip key={type.slot} label={type.type.name} clickable />
+            ))}
+          </Box>
         </ContentContainer>
       </CardContent>
     </CardContainer>
