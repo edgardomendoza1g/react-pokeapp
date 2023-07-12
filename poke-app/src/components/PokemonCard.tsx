@@ -3,7 +3,9 @@ import { CardContent, Typography, CardMedia, Chip, Box } from "@mui/material";
 import { CardContainer, ContentContainer } from "../styles/theme";
 import { PokemonDetail, PokemonIndividualProps } from "../types";
 
-const PokemonCard: React.FC<{pokemon: PokemonIndividualProps}> = ( {pokemon} ) => {
+const PokemonCard: React.FC<{ pokemon: PokemonIndividualProps }> = ({
+  pokemon,
+}) => {
   const { url, name } = pokemon;
   const [pokemonData, setPokemonData] = useState<PokemonDetail | null>(null);
   useEffect(() => {
@@ -37,15 +39,42 @@ const PokemonCard: React.FC<{pokemon: PokemonIndividualProps}> = ( {pokemon} ) =
       />
       <CardContent>
         <ContentContainer>
-          <Typography variant="caption" display="block" gutterBottom>
-            #{pokemonData?.id}
+          <Typography variant="caption" display="block" gutterBottom style={{ fontWeight: "bold", fontSize: "0.8rem" }}>
+            <Typography
+              variant="caption"
+              display="inline"
+              gutterBottom
+              style={{ fontWeight: "lighter", fontSize: "1rem" }}
+            >
+            Number: 
+            </Typography>{" "}
+            {pokemonData?.id}
           </Typography>
+
           <Typography variant="h5" display="block" gutterBottom>
             {name.charAt(0).toUpperCase() + name.slice(1)}
           </Typography>
-          <Box>
-            {pokemonData?.types.map((type) => (
-              <Chip key={type.slot} label={type.type.name} clickable />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              marginLeft: "2px",
+              padding: "2px",
+            }}
+          >
+            {pokemonData?.types.map((type, index) => (
+              <React.Fragment key={type.slot}>
+                <Chip
+                  label={
+                    type.type.name.charAt(0).toUpperCase() +
+                    type.type.name.slice(1)
+                  }
+                  clickable
+                />
+                {index !== pokemonData.types.length - 1 && (
+                  <Box sx={{ width: 6 }} />
+                )}
+              </React.Fragment>
             ))}
           </Box>
         </ContentContainer>

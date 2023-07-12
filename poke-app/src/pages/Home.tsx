@@ -55,13 +55,12 @@ const Home: React.FC = () => {
     <Box
       sx={{
         backgroundColor: grey[100],
-        display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
+        margin: "0px",
+        paddingLeft: "0px",
       }}
     >
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         Pokemon App
       </Typography>
       <TextField
@@ -78,13 +77,32 @@ const Home: React.FC = () => {
               <Link to={`/pokemon/${id}`} style={{ textDecoration: "none" }}>
                 <PokemonCard pokemon={pokemon} />
               </Link>
-              <Button
-                variant="contained"
-                onClick={() => handleAddToTeam(pokemon)}
-                sx={{ borderRadius: "20px" }}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  marginTop: "-0rem",
+                }}
               >
-                Add to Team
-              </Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleAddToTeam(pokemon)}
+                  sx={{
+                    marginTop: "-2.5rem",
+                    borderRadius: "0px 20px 0px 20px",
+                    backgroundColor: "rgba(0, 0, 2, 1)",
+                    transition: "background-color 0.3s ease-out",
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 30, 1)",
+                    },
+                    "&:active": {
+                      backgroundColor: "rgba(0, 0, 255, 1)",
+                    },
+                  }}
+                >
+                  Add to Team
+                </Button>
+              </Box>
             </Grid>
           );
         })}
@@ -94,7 +112,15 @@ const Home: React.FC = () => {
           variant="contained"
           onClick={handlePreviousPage}
           disabled={offset === 0}
-          sx={{ margin: "1rem", borderRadius: "20px" }}
+          sx={{ margin: "1rem", borderRadius: "20px" ,
+          backgroundColor: "rgba(2, 0, 0, 0.5)",
+          transition: "background-color 0.3s ease-out",
+          "&:hover": {
+            backgroundColor: "rgba(25, 0, 0, 1)",
+          },
+          "&:active": {
+            backgroundColor: "rgba(2, 0, 0, 1)",
+          },}}
         >
           Previous
         </Button>
@@ -102,29 +128,52 @@ const Home: React.FC = () => {
           variant="contained"
           onClick={handleNextPage}
           disabled={offset >= totalCount - 25}
-          sx={{ borderRadius: "20px" }}
+          sx={{
+            borderRadius: "20px",
+            backgroundColor: "rgba(2, 0, 0, 0.5)",
+            transition: "background-color 0.3s ease-out",
+            "&:hover": {
+              backgroundColor: "rgba(25, 0, 0, 1)",
+            },
+            "&:active": {
+              backgroundColor: "rgba(2, 0, 0, 1)",
+            },
+          }}
         >
           Next
         </Button>
       </Box>
-
-      <Typography variant="h4" gutterBottom>
-        Team Pokemon
-      </Typography>
-      <Grid container spacing={2}>
-        {teamPokemon.map((pokemon) => (
-          <Grid item xs={12} sm={6} md={4} lg={2.25} key={pokemon.name}>
-            <PokemonCard pokemon={pokemon} />
-            <Button
-              variant="contained"
-              onClick={() => handleRemoveFromTeam(pokemon)}
-              sx={{ borderRadius: "20px" }}
-            >
-              Remove from Team
-            </Button>
+      {teamPokemon.length > 0 && (
+        <>
+          <Typography variant="h4" gutterBottom>
+            Team Pokemon
+          </Typography>
+          <Grid container spacing={2}>
+            {teamPokemon.map((pokemon) => (
+              <Grid item xs={12} sm={6} md={4} lg={2.25} key={pokemon.name}>
+                <PokemonCard pokemon={pokemon} />
+                <Button
+                  variant="contained"
+                  onClick={() => handleRemoveFromTeam(pokemon)}
+                  sx={{
+                    borderRadius: "20px",
+                    backgroundColor: "rgba(2, 0, 0, 0.5)",
+                    transition: "background-color 0.3s ease-out",
+                    "&:hover": {
+                      backgroundColor: "rgba(25, 0, 0, 1)",
+                    },
+                    "&:active": {
+                      backgroundColor: "rgba(2, 0, 0, 1)",
+                    },
+                  }}
+                >
+                  Remove from Team
+                </Button>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+        </>
+      )}
     </Box>
   );
 };

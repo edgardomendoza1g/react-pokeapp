@@ -6,22 +6,26 @@ export const CardContainer = styled(Card)({
   flexDirection: "column",
   alignItems: "center",
   padding: "1rem",
-  borderRadius: "8px",
+  borderRadius: "20px",
   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-  transition: "0.3s ease-in-out",
+  transition: "0.5s ease-in-out",
   "&:hover": {
     transform: "scale(1.05)",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.3)",
   },
   height: "300px",
+  border: "1px  green",
 });
 
 export const ContentContainer = styled(CardContent)({
-  flexGrow: 1,
+  height:'70%',
+  width: "80%",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   padding: "1rem",
+  borderRadius: "20px",
+
 });
 
 export const Title = styled(Typography)({
@@ -37,13 +41,19 @@ export const InfoContainer = styled("div")({
   padding: "1rem",
 });
 
-export const ImageContainer = styled("img")({
-  width: "150px",
-  height: "150px",
-  objectFit: "contain",
-  borderRadius: "50%",
+export const ImageContainer = styled("div")({
+  width: "100px",
+  height: "100px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   marginBottom: "1rem",
   border: "10px solid lightgreen",
+});
+
+export const Image = styled("img")({
+  maxWidth: "100%",
+  maxHeight: "90%",
 });
 
 export const InfoPage = styled(CardContent)({
