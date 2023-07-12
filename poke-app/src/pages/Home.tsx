@@ -1,4 +1,4 @@
-import { Box, Grid, TextField, Typography } from "@mui/material";
+import { Box, Grid, TextField, Typography, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import { Link, useSearchParams } from "react-router-dom";
@@ -99,33 +99,53 @@ const Home = () => {
               <Link to={`/pokemon/${id}`} style={{ textDecoration: "none" }}>
                 <PokemonCard pokemon={pokemon} />
               </Link>
-              <button onClick={() => handleAddToTeam(pokemon)}>
+              <Button
+                variant="contained"
+                onClick={() => handleAddToTeam(pokemon)}
+                sx={{ borderRadius: "20px" }}
+              >
                 Add to Team
-              </button>
+              </Button>
             </Grid>
           );
         })}
       </Grid>
       <Box mt={4} textAlign="center">
-        <button onClick={handlePreviousPage} disabled={offset === 0}>
+        <Button
+          variant="contained"
+          onClick={handlePreviousPage}
+          disabled={offset === 0}
+          sx={{ margin: "1rem", borderRadius: "20px" }}
+        >
           Previous
-        </button>
-        <button onClick={handleNextPage} disabled={offset >= totalCount - 25}>
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNextPage}
+          disabled={offset >= totalCount - 25}
+          sx={{ borderRadius: "20px" }}
+        >
           Next
-        </button>
+        </Button>
       </Box>
 
       <Typography variant="h4" gutterBottom>
         Team Pokemon
       </Typography>
-      {teamPokemon.map((pokemon) => (
-        <div key={pokemon.id}>
-          <span>{pokemon.name}</span>
-          <button onClick={() => handleRemoveFromTeam(pokemon)}>
-            Remove from Team
-          </button>
-        </div>
-      ))}
+      <Grid container spacing={2}>
+        {teamPokemon.map((pokemon) => (
+          <Grid item xs={12} sm={6} md={4} lg={2.25} key={pokemon.name}>
+            <PokemonCard pokemon={pokemon} />
+            <Button
+              variant="contained"
+              onClick={() => handleRemoveFromTeam(pokemon)}
+              sx={{ borderRadius: "20px" }}
+            >
+              Remove from Team
+            </Button>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };
