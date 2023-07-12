@@ -93,15 +93,7 @@ const Pokemon: React.FC = () => {
             >
               {types.map((type: any) => (
                 <Grid item key={type.slot}>
-                  <Chip
-                    label={type.type.name}
-                    variant="outlined"
-                    sx={{
-                      fontFamily: "Verdana",
-                      color: "black",
-                      backgroundColor: "green",
-                    }}
-                  />
+                  <Chip label={type.type.name} />
                 </Grid>
               ))}
             </Grid>
@@ -145,13 +137,17 @@ const Pokemon: React.FC = () => {
 
       <Box sx={{ margin: "2rem", textAlign: "center" }}>
         <Button
-          sx={{ margin: "2rem" }}
           variant="contained"
           onClick={handleGoBack}
+          sx={{ margin: "2rem", borderRadius: "20px" }}
         >
           Go back to Home
         </Button>
-        <Button variant="contained" onClick={handleAddToTeam}>
+        <Button
+          variant="contained"
+          onClick={handleAddToTeam}
+          sx={{ borderRadius: "20px" }}
+        >
           Add to Team
         </Button>
       </Box>
