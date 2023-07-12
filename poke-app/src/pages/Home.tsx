@@ -81,6 +81,10 @@ const Home = () => {
     <Box
       sx={{
         backgroundColor: grey[100],
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Typography variant="h2" gutterBottom>
@@ -90,6 +94,7 @@ const Home = () => {
         label="Search Pokemon"
         variant="outlined"
         onChange={handleSearchChange}
+        sx={{ marginBottom: "1rem" }}
       />
       <Grid container spacing={2}>
         {pokemonList.map((pokemon) => {

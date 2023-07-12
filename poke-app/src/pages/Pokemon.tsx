@@ -59,7 +59,7 @@ const Pokemon: React.FC = () => {
           minHeight: "300px",
         }}
       >
-        <CircularProgress size={120} />{" "}
+        <CircularProgress size={120} />
       </Box>
     );
   }
