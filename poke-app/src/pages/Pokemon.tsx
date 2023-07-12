@@ -40,7 +40,18 @@ const Pokemon: React.FC = () => {
   }, [id]);
 
   if (!pokemonDetail) {
-    return <CircularProgress />;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "300px", 
+        }}
+      >
+        <CircularProgress size={120} />{" "}
+      </Box>
+    );
   }
 
   const { name, height, weight, sprites, types, stats } = pokemonDetail;
@@ -77,8 +88,8 @@ const Pokemon: React.FC = () => {
                     variant="outlined"
                     sx={{
                       fontFamily: "Verdana",
-                      color: 'black',
-                      backgroundColor: 'green',
+                      color: "black",
+                      backgroundColor: "green",
                     }}
                   />
                 </Grid>
