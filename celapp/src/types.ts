@@ -1,36 +1,20 @@
-export interface PokemonIndividualProps {
-  name: string;
-  url: string;
+interface Cliente {
+  id: number;
+  nombre: string;
+  apellido: string;
+  email: string;
+  password: string;
+  direccion: string;
+  fechanacimiento: string;
+  imagen: string;
+  items: Item[];
+  edad:number;
 }
-export interface PokemonProps  {
-  pokemon: {
-    name: string;
-    url: string;
-  };
+export interface Item {
+  id: number;
+  descripcion: string;
+  cantidad: number;
+  precio: number;
 }
 
-export interface PokemonDetail {
-  sprites: {
-    other: {
-      dream_world: {
-        front_default: string;
-      };
-    };
-  };
-  id: number;
-  types: {
-    slot: number;
-    type: {
-      name: string;
-    };
-  }[];
-  stats: {
-    base_stat: number;
-    stat: {
-      name: string;
-    };
-  }[];
-  name:string;
-  height:number;
-  weight:number;
-}
+export default Cliente;
