@@ -1,14 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Pokemon from "./pages/Pokemon";
+import Login from "./pages/Login";
+import Information from "./pages/Information";
+
 
 const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/pokemon/:id" element={<Pokemon />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/information" element={<Information />} />
       </Routes>
     </Router>
   );
